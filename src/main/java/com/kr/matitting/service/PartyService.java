@@ -252,7 +252,7 @@ public class PartyService {
             if (byPartyIdAndLeaderIdAndUserId.isEmpty()) {
                 throw new PartyJoinException(PartyJoinExceptionType.NOT_FOUND_PARTY_JOIN);
             }
-            partyJoinRepository.deleteById(partyJoin.getParty().getId());
+            partyJoinRepository.delete(byPartyIdAndLeaderIdAndUserId.get());
             return byPartyIdAndLeaderIdAndUserId.get().getId();
         }
         return null;
