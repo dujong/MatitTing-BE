@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Entity
@@ -32,6 +34,9 @@ public class ChatRoom extends BaseTimeEntity {
 
     @Enumerated(EnumType.STRING)
     private ChatRoomType roomType;
+
+    @OneToMany(mappedBy = "chatRoom", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ChatUser> chatUserList = new ArrayList<>();
 
     public static ChatRoom createRoom(Party party, User user, ChatRoomType roomType, String title) {
         ChatRoom chatRoom = new ChatRoom();
