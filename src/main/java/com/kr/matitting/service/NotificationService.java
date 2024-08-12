@@ -2,6 +2,7 @@ package com.kr.matitting.service;
 
 import com.kr.matitting.constant.NotificationType;
 import com.kr.matitting.dto.NotificationDto;
+import com.kr.matitting.dto.NotificationDto.Response;
 import com.kr.matitting.entity.Notification;
 import com.kr.matitting.entity.Party;
 import com.kr.matitting.entity.User;
@@ -55,13 +56,20 @@ public class NotificationService {
 
         if (hasLostData(lastEventId)) {
             sendLostData(lastEventId, user, emitterId, emitter);
-        } else {
-            List<Notification> allByReceiverId = notificationRepository.findAllByReceiver_Id(user.getId());
-            allByReceiverId.sort(Comparator.comparing(Notification::getId));
-            allByReceiverId.forEach(notification -> sendNotification(emitter, notification.getEventId(), NotificationDto.Response.createResponse(notification)));
         }
+//        else {
+//            List<Notification> allByReceiverId = notificationRepository.findAllByReceiver_Id(user.getId());
+//            allByReceiverId.sort(Comparator.comparing(Notification::getId));
+//            allByReceiverId.forEach(notification -> sendNotification(emitter, notification.getEventId(), NotificationDto.Response.createResponse(notification)));
+//        }
 
         return emitter;
+    }
+
+    public List<Response> getNotifications(Long userId) {
+        List<Notification> allByReceiverId = notificationRepository.findAllByReceiver_Id(userId);
+        allByReceiverId.sort(Comparator.comparing(Notification::getId));
+        return allByReceiverId.stream().map(notification -> Response.createResponse(notification)).toList();
     }
 
     /**

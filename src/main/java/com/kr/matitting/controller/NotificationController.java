@@ -30,4 +30,10 @@ public class NotificationController {
         response.setHeader("X-Accel-Buffering", "no");
         return ResponseEntity.ok(notificationService.subscribe(userId, lastEventId));
     }
+
+    @Operation(summary = "알림 내역 조회", description = "알림 subscribe시 그동안의 알림 내역을 가져오는 API")
+    @GetMapping
+    public ResponseEntity<?> getNotifications(@AuthenticationPrincipal Long userId) {
+        return ResponseEntity.ok(notificationService.getNotifications(userId));
+    }
 }
