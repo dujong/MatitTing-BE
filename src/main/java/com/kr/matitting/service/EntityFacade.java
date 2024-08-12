@@ -37,6 +37,10 @@ public class EntityFacade {
         return userById.get();
     }
 
+    public Optional<User> getOptUser(Long userId) {
+        return userRepository.findById(userId);
+    }
+
     public Party getParty(Long partyId) {
         Optional<Party> partyById = partyRepository.findById(partyId);
         if (partyById.isEmpty()) throw new PartyException(PartyExceptionType.NOT_FOUND_PARTY);
