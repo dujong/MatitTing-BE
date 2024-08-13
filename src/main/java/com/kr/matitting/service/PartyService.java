@@ -43,11 +43,11 @@ public class PartyService {
     private final EntityFacade entityFacade;
 
     public ResponsePartyDetailDto getPartyInfo(Long userId, Long partyId) {
-        User user = entityFacade.getUser(userId);
+        Optional<User> optUser = entityFacade.getOptUser(userId);
         Party party = entityFacade.getParty(partyId);
         increaseHit(partyId);
 
-        return ResponsePartyDetailDto.from(party, user);
+        return ResponsePartyDetailDto.from(party, optUser.get());
     }
 
     public void increaseHit(Long partyId) {
